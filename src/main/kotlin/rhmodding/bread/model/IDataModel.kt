@@ -1,5 +1,7 @@
 package rhmodding.bread.model
 
+import kotlinx.serialization.Serializable
+
 
 interface IDataModel {
     

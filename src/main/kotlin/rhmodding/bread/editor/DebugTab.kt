@@ -7,6 +7,8 @@ import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
 import rhmodding.bread.model.IDataModel
 import java.io.File
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 
 
 open class DebugTab<F : IDataModel>(editor: Editor<F>) : EditorSubTab<F>(editor, "Debug") {
@@ -49,7 +51,7 @@ open class DebugTab<F : IDataModel>(editor: Editor<F>) : EditorSubTab<F>(editor,
     }
 
     protected open fun exportToJSON() {
-        val json = Json.decodeFromString("$data")
+        val json = Json.encodeToString(data)
         val fileChooser = FileChooser()
         fileChooser.title = "Export debug info as a JSON file."
         fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("json", "*.json"))
@@ -58,7 +60,7 @@ open class DebugTab<F : IDataModel>(editor: Editor<F>) : EditorSubTab<F>(editor,
 
         val file = fileChooser.showSaveDialog(null)
         if (file != null) {
-            file.writeText("$json")
+            file.writeText(json)
         }
     }
     

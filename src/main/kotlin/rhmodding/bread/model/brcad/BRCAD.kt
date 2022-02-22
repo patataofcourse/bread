@@ -6,6 +6,7 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 
+@Serializable
 class BRCAD : IDataModel {
 
     var spritesheetNumber: UShort = 0u
