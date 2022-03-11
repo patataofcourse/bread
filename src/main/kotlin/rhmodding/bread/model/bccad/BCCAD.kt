@@ -4,6 +4,7 @@ import javafx.scene.paint.Color
 import rhmodding.bread.model.IDataModel
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import kotlinx.serialization.*
 
 
 @Serializable

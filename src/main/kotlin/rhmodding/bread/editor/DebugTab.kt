@@ -1,14 +1,16 @@
 package rhmodding.bread.editor
 
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 import javafx.scene.control.Button
 import javafx.scene.control.ScrollPane
 import javafx.scene.control.TextArea
 import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
+import rhmodding.bread.editor.BCCADEditor
+import rhmodding.bread.editor.BRCADEditor
 import rhmodding.bread.model.IDataModel
 import java.io.File
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
 
 
 open class DebugTab<F : IDataModel>(editor: Editor<F>) : EditorSubTab<F>(editor, "Debug") {
@@ -51,12 +53,17 @@ open class DebugTab<F : IDataModel>(editor: Editor<F>) : EditorSubTab<F>(editor,
     }
 
     protected open fun exportToJSON() {
-        val json = Json.encodeToString(data)
+        var json = ""
+        if (editor is BCCADEditor) {
+            json = Json.encodeToString(editor.data)
+        } else if (editor is BRCADEditor) {
+            json = Json.encodeToString(editor.data)
+        }
         val fileChooser = FileChooser()
         fileChooser.title = "Export debug info as a JSON file."
         fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("json", "*.json"))
         fileChooser.initialDirectory = editor.dataFile.parentFile
-        fileChooser.initialFileName = "name of file go here.json"
+        fileChooser.initialFileName = "bread_export.json"
 
         val file = fileChooser.showSaveDialog(null)
         if (file != null) {
